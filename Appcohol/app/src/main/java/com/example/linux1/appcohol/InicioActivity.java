@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -104,7 +106,9 @@ public class InicioActivity extends AppCompatActivity
 
         } else if ( id == R.id.nav_eliminar ) {
             /* Eliminar la cuenta de usuario */
-
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            EliminarCuenta eliminar = new EliminarCuenta();
+            eliminar.show(fragmentManager,"tageliminar");
 
         } else if (id == R.id.nav_cocket) {
             /* Abrir ventana de añadir nuevo Cocktel */
