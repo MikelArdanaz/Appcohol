@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Christian on 19/03/2017.
  */
 
-public class AdaptadorListaComponentesNuevo extends BaseAdapter {
+public class AdaptadorListaComponentesMostrar extends BaseAdapter {
 
     /* Declaracion de variables de nuestro adaptador */
     Context context;
@@ -25,7 +25,7 @@ public class AdaptadorListaComponentesNuevo extends BaseAdapter {
     private ArrayList<Componente> arraylist;
 
     /* Constructor de nuestro adaptador */
-    public AdaptadorListaComponentesNuevo(Context context, List<Componente> lista_componentes) {
+    public AdaptadorListaComponentesMostrar(Context context, List<Componente> lista_componentes) {
         this.context = context;
         this.lista_componentes = lista_componentes;
         inflater = LayoutInflater.from(context);
@@ -37,7 +37,6 @@ public class AdaptadorListaComponentesNuevo extends BaseAdapter {
     public class ViewHolder {
         TextView nombre;
         TextView cantidad;
-        Button bt_eliminar;
     }
 
     /* Funciones para obtener el elemento de la lista necesario */
@@ -61,12 +60,11 @@ public class AdaptadorListaComponentesNuevo extends BaseAdapter {
         final ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
-            view = inflater.inflate(R.layout.item_componente_nuevo, null);
+            view = inflater.inflate(R.layout.item_componente_mostrar, null);
 
             /* Relacionamos los elementos del item declarados con el layout */
-            holder.nombre = (TextView) view.findViewById(R.id.tv_nuevococktel_item_nombre);
-            holder.cantidad = (TextView) view.findViewById(R.id.tv_nuevococktel_item_cantidad);
-            holder.bt_eliminar = (Button) view.findViewById(R.id.bt_nuevococktel_item_eliminar);
+            holder.nombre = (TextView) view.findViewById(R.id.tv_mostrarcocktel_item_nombre);
+            holder.cantidad = (TextView) view.findViewById(R.id.tv_mostrarcocktel_item_cantidad);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -75,15 +73,6 @@ public class AdaptadorListaComponentesNuevo extends BaseAdapter {
         /* Rellenamos esos elementos con los datos del cocktel */
         holder.nombre.setText(lista_componentes.get(position).getNombre());
         holder.cantidad.setText(lista_componentes.get(position).getCantidad()+"");
-
-        /* Eliminar componente */
-        holder.bt_eliminar.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_componentes.remove(position);
-                notifyDataSetChanged();
-            }
-        });
 
         return view;
     }

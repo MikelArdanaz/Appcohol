@@ -61,7 +61,6 @@ public class RegistroActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 /* Obtener los campos */
-                ParseUser.getCurrentUser().logOut();//http://stackoverflow.com/questions/29386555/parseexception-invalid-session-token-error
                 usuario = et_usuario.getText().toString();
                 pass = et_pass.getText().toString();
                 pass2 = et_pass2.getText().toString();

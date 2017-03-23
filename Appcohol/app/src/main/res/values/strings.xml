@@ -27,4 +27,6 @@
         <item>4</item>
     </string-array>
 
+    <string name="access_token">pk.eyJ1IjoiY2hyaXN0aWFuYXlhbGEiLCJhIjoiY2l6OGFhdGVyMDBvaDJxbW5jcXJmNTZhYiJ9.C7A7lW9mmcT8kWCnbO2hhg</string>
+
 </resources>

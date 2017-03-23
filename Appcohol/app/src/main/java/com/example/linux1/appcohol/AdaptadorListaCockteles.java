@@ -1,6 +1,7 @@
 package com.example.linux1.appcohol;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,13 @@ public class AdaptadorListaCockteles extends BaseAdapter {
             @Override
             public void onClick(View arg0) {
 
+                Intent intent = new Intent( context, MostrarCocktelActivity.class );
+                intent.putExtra("Cocktel", lista_cockteles.get(position).getNombre() );
+                intent.putExtra("Precio", Integer.toString(lista_cockteles.get(position).getPrecio()));
+                intent.putExtra("Personas", lista_cockteles.get(0).getPersonas());
+                intent.putExtra("Calorias", Integer.toString(lista_cockteles.get(position).getCalorias()));
+                intent.putExtra("Calificacion", Integer.toString(lista_cockteles.get(position).getCalificacion()));
+                context.startActivity(intent);
             }
         });
 

@@ -133,8 +133,10 @@ public class NuevoCocktelActivity extends AppCompatActivity {
                             ParseObject nuevo_cocktel = new ParseObject("cockteles");
                             nuevo_cocktel.put("nombre",cocktel);
                             nuevo_cocktel.put("creador",user.getObjectId());
+                            nuevo_cocktel.put("creador_nombre", user.getUsername());
                             nuevo_cocktel.put("personas",personas);
                             nuevo_cocktel.put("categoria", categoria);
+
 
                         /* Vamos a recorrer los componentes introduciendolos en la bd a la vez que calculamos las
                         * calorias y el precio totales como suma de el total */

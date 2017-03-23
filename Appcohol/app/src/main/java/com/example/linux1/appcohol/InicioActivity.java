@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -61,7 +61,7 @@ public class InicioActivity extends AppCompatActivity
         lista = (ListView) findViewById(R.id.lv_inicio_lista);
 
         /* Realizamos la carga de los datos de la lista */
-        new CargarCocktelesLista().execute();
+        new CargarCocktelesListaNuevos().execute();
 
         //Boton flotante
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -92,6 +92,62 @@ public class InicioActivity extends AppCompatActivity
         }
     }
 
+    /* Gestionar las opciones del menu de navegacion lateral*/
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.nav_perfil) {
+            /* Abrir ventana de perfil */
+            Intent intent = new Intent( InicioActivity.this, PerfilActivity.class );
+            startActivity( intent );
+
+        } else if ( id == R.id.nav_eliminar ) {
+            /* Eliminar la cuenta de usuario */
+            Intent intent = new Intent( InicioActivity.this, PopupEliminarCuenta.class );
+            startActivityForResult(intent, 1);
+
+        } else if (id == R.id.nav_cocket) {
+            /* Abrir ventana de añadir nuevo Cocktel */
+            Intent intent = new Intent( InicioActivity.this, NuevoCocktelActivity.class );
+            startActivity( intent );
+
+        }else if (id == R.id.nav_random) {
+            /* Abrir ventana de Cocktel aleatorio */
+            Intent intent = new Intent( InicioActivity.this, RandomActivity.class );
+            startActivity( intent );
+
+        } else if (id == R.id.nav_calificacion) {
+            /* Mostrar lista ordenada por calificacion */
+            Ordenar("calificacion");
+
+        } else if (id == R.id.nav_calorias) {
+            /* Mostrar lista ordenada por calorias */
+            Ordenar("calorias");
+
+        } else if (id == R.id.nav_precio) {
+            /* Mostrar lista ordenada por precio */
+            Ordenar("precio");
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dl_inicio_menu);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(resultCode) {
+            case 1:
+                finish();
+            case 2:
+                //
+        }
+    }
+
     public void Ordenar(String criterio){
         try{
             ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
@@ -115,52 +171,8 @@ public class InicioActivity extends AppCompatActivity
         }
     }
 
-    /* Gestionar las opciones del menu de navegacion lateral*/
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_perfil) {
-            /* Abrir ventana de perfil */
-            Intent intent = new Intent( InicioActivity.this, PerfilActivity.class );
-            startActivity( intent );
-
-        } else if ( id == R.id.nav_eliminar ) {
-            /* Eliminar la cuenta de usuario */
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            EliminarCuenta eliminar = new EliminarCuenta();
-            eliminar.show(fragmentManager,"tageliminar");
-
-        } else if (id == R.id.nav_cocket) {
-            /* Abrir ventana de añadir nuevo Cocktel */
-            Intent intent = new Intent( InicioActivity.this, NuevoCocktelActivity.class );
-            startActivity( intent );
-
-        }else if (id == R.id.nav_random) {
-            /* Abrir ventana de Cocktel aleatorio */
-            Intent intent = new Intent( InicioActivity.this, RandomActivity.class );
-            startActivity( intent );
-
-        } else if (id == R.id.nav_calificacion) {
-            //Mostrar lista ordenada por calificacion
-            Ordenar("calificacion");
-
-        } else if (id == R.id.nav_calorias) {
-            //Mostrar lista ordenada por calorias
-            Ordenar("calorias");
-        } else if (id == R.id.nav_precio) {
-            Ordenar("precio");
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dl_inicio_menu);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     /* CargarDatosLista */
-    private class CargarCocktelesLista extends AsyncTask<Void, Void, Void> {
+    private class CargarCocktelesListaNuevos extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -169,6 +181,7 @@ public class InicioActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
+            /* Creamos el array de cockteles */
             lista_cockteles = new ArrayList<Cocktel>();
             try {
                 /* Elegimos la tabla en la que queremos hacer la consulta */
@@ -177,15 +190,15 @@ public class InicioActivity extends AppCompatActivity
                 /* Por defecto la ordenaremos por orden descendente de creacion*/
                 query.orderByDescending("_created_at");
                 lista_objetos = query.find();
-                for (ParseObject country : lista_objetos) {
+                for (ParseObject objeto : lista_objetos) {
 
                     Cocktel map = new Cocktel();
-                    map.setNombre((String) country.get("nombre"));
-                    map.setPersonas((String) country.get("personas"));
-                    map.setPrecio((Integer) country.get("precio"));
-                    map.setCalorias((Integer) country.get("calorias"));
-                    map.setCalificacion((Integer) country.get("calificacion"));
-                    map.setCreador((String) country.get("creador"));
+                    map.setNombre((String) objeto.get("nombre"));
+                    map.setPersonas((String) objeto.get("personas"));
+                    map.setPrecio((Integer) objeto.get("precio"));
+                    map.setCalorias((Integer) objeto.get("calorias"));
+                    map.setCalificacion((Integer) objeto.get("calificacion"));
+                    map.setCreador((String) objeto.get("creador"));
                     lista_cockteles.add(map);
                 }
             } catch (ParseException e) {

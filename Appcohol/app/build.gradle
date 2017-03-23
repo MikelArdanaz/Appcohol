@@ -30,4 +30,9 @@ dependencies {
 
     //Libreria imagenes circulares
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    //Libreria mapas
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar'){
+        transitive=true
+    }
 }
