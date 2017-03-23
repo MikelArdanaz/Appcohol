@@ -1,13 +1,21 @@
 package com.example.linux1.appcohol;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -19,6 +27,9 @@ public class PerfilActivity extends AppCompatActivity {
 
     /* Variables */
     private ParseUser user;
+    private List<ParseObject> lista_objetos;
+    private AdaptadorListaCockteles adaptador;
+    private List<Cocktel> lista_cockteles = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +47,13 @@ public class PerfilActivity extends AppCompatActivity {
         bt_cockteles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                new CargarCocktelesLista().execute();
             }
         });
 
         /* Mostrar mis cocketeles favoritos en la lista */
         bt_favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View view) {
 
             }
@@ -53,4 +63,51 @@ public class PerfilActivity extends AppCompatActivity {
         user = ParseUser.getCurrentUser();
         tv_usuario.setText(user.getUsername());
     }
+
+    private class CargarCocktelesLista extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            /* Creamos el array de cockteles */
+            lista_cockteles = new ArrayList<Cocktel>();
+            try {
+                /* Elegimos la tabla en la que queremos hacer la consulta */
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
+                        "cockteles");
+                /* Por defecto la ordenaremos por orden descendente de creacion*/
+                query.orderByDescending("_created_at");
+                query.whereEqualTo("creador",user.getObjectId());
+                lista_objetos = query.find();
+                for (ParseObject country : lista_objetos) {
+
+                    Cocktel map = new Cocktel();
+                    map.setNombre((String) country.get("nombre"));
+                    map.setPersonas((String) country.get("personas"));
+                    map.setPrecio((Integer) country.get("precio"));
+                    map.setCalorias((Integer) country.get("calorias"));
+                    map.setCalificacion((Integer) country.get("calificacion"));
+                    map.setCreador((String) country.get("creador"));
+                    lista_cockteles.add(map);
+                }
+            } catch (ParseException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            /* Le pasamos los resultados obtenidos al adaptador */
+            adaptador = new AdaptadorListaCockteles(PerfilActivity.this, lista_cockteles);
+            /* Relacionamos el adaptador con la lista */
+            lv_lista.setAdapter(adaptador);
+        }
+    }
 }
+

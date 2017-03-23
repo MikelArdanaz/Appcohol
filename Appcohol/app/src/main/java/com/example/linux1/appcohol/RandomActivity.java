@@ -22,7 +22,7 @@ public class RandomActivity extends AppCompatActivity {
         bt_aleatorio = (Button) findViewById(R.id.bt_random_aleatorio);
 
 
-        /* Generar cocktel aleatorio */
+        /* Generar Cocktel aleatorio */
         bt_aleatorio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,5 +24,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
+
+    //Libreria Parse
     compile 'com.parse:parse-android:1.13.3'
+
+    //Libreria imagenes circulares
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

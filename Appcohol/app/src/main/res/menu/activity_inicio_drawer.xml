@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_perfil"
             android:title="Perfil" />
         <item
+            android:id="@+id/nav_eliminar"
+            android:icon="@drawable/ic_menu_eliminar"
+            android:title="Eliminar cuenta" />
+        <item
             android:id="@+id/nav_cocket"
             android:icon="@drawable/ic_menu_cocktel"
             android:title="Añadir cocket" />
