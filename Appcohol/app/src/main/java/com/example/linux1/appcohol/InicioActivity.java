@@ -92,6 +92,29 @@ public class InicioActivity extends AppCompatActivity
         }
     }
 
+    public void Ordenar(String criterio){
+        try{
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
+            query.orderByDescending(criterio);
+            lista_objetos = query.find();
+            lista_cockteles.clear();
+            for (ParseObject cock : lista_objetos) {
+                Cocktel map = new Cocktel();
+                map.setNombre((String) cock.get("nombre"));
+                map.setPersonas((String) cock.get("personas"));
+                map.setPrecio((Integer) cock.get("precio"));
+                map.setCalorias((Integer) cock.get("calorias"));
+                map.setCalificacion((Integer) cock.get("calificacion"));
+                map.setCreador((String) cock.get("creador"));
+                lista_cockteles.add(map);
+            }
+            adaptador.notifyDataSetChanged();
+        } catch (ParseException e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     /* Gestionar las opciones del menu de navegacion lateral*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -122,74 +145,13 @@ public class InicioActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_calificacion) {
             //Mostrar lista ordenada por calificacion
-            try{
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
-                query.orderByDescending("calificacion");
-                lista_objetos = query.find();
-                lista_cockteles.clear();
-                for (ParseObject cock : lista_objetos) {
-                    Cocktel map = new Cocktel();
-                    map.setNombre((String) cock.get("nombre"));
-                    map.setPersonas((String) cock.get("personas"));
-                    map.setPrecio((Integer) cock.get("precio"));
-                    map.setCalorias((Integer) cock.get("calorias"));
-                    map.setCalificacion((Integer) cock.get("calificacion"));
-                    map.setCreador((String) cock.get("creador"));
-                    lista_cockteles.add(map);
-                }
-                Void result=null;
-                new CargarCocktelesLista().onPostExecute(result);
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
+            Ordenar("calificacion");
+
         } else if (id == R.id.nav_calorias) {
             //Mostrar lista ordenada por calorias
-            try{
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
-                query.orderByDescending("calorias");
-                lista_objetos = query.find();
-                lista_cockteles.clear();
-                for (ParseObject cock : lista_objetos) {
-                    Cocktel map = new Cocktel();
-                    map.setNombre((String) cock.get("nombre"));
-                    map.setPersonas((String) cock.get("personas"));
-                    map.setPrecio((Integer) cock.get("precio"));
-                    map.setCalorias((Integer) cock.get("calorias"));
-                    map.setCalificacion((Integer) cock.get("calificacion"));
-                    map.setCreador((String) cock.get("creador"));
-                    lista_cockteles.add(map);
-                }
-                Void result=null;
-                new CargarCocktelesLista().onPostExecute(result);
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-
+            Ordenar("calorias");
         } else if (id == R.id.nav_precio) {
-            try{
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
-                query.orderByDescending("precio");
-                lista_objetos = query.find();
-                lista_cockteles.clear();
-                for (ParseObject cock : lista_objetos) {
-                    Cocktel map = new Cocktel();
-                    map.setNombre((String) cock.get("nombre"));
-                    map.setPersonas((String) cock.get("personas"));
-                    map.setPrecio((Integer) cock.get("precio"));
-                    map.setCalorias((Integer) cock.get("calorias"));
-                    map.setCalificacion((Integer) cock.get("calificacion"));
-                    map.setCreador((String) cock.get("creador"));
-                    lista_cockteles.add(map);
-                }
-                Void result=null;
-                new CargarCocktelesLista().onPostExecute(result);
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-
+            Ordenar("precio");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dl_inicio_menu);
