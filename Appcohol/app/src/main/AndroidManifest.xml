@@ -23,6 +23,7 @@
         <activity android:name=".RandomActivity" />
         <activity android:name=".NuevoCocktelActivity" />
 
+
     </application>
 
 </manifest>

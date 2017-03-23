@@ -122,29 +122,73 @@ public class InicioActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_calificacion) {
             //Mostrar lista ordenada por calificacion
-            ParseObject test = new ParseObject("cockteles");
-            test.put("nombre","GinTonic");
-            test.put("creador",user.getObjectId());
-            test.put("personas","2-4");
-            test.put("precio",21.00);
-            test.put("calorias",1234);
-            test.put("calificacion",3);
-            test.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if( e == null){
-                        System.out.println("Objeto test creado");
-                    } else {
-                        System.out.println("No se ha podido crear el objeto test");
-                    }
+            try{
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
+                query.orderByDescending("calificacion");
+                lista_objetos = query.find();
+                lista_cockteles.clear();
+                for (ParseObject cock : lista_objetos) {
+                    Cocktel map = new Cocktel();
+                    map.setNombre((String) cock.get("nombre"));
+                    map.setPersonas((String) cock.get("personas"));
+                    map.setPrecio((Integer) cock.get("precio"));
+                    map.setCalorias((Integer) cock.get("calorias"));
+                    map.setCalificacion((Integer) cock.get("calificacion"));
+                    map.setCreador((String) cock.get("creador"));
+                    lista_cockteles.add(map);
                 }
-            });
-
+                Void result=null;
+                new CargarCocktelesLista().onPostExecute(result);
+            } catch (ParseException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
         } else if (id == R.id.nav_calorias) {
             //Mostrar lista ordenada por calorias
+            try{
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
+                query.orderByDescending("calorias");
+                lista_objetos = query.find();
+                lista_cockteles.clear();
+                for (ParseObject cock : lista_objetos) {
+                    Cocktel map = new Cocktel();
+                    map.setNombre((String) cock.get("nombre"));
+                    map.setPersonas((String) cock.get("personas"));
+                    map.setPrecio((Integer) cock.get("precio"));
+                    map.setCalorias((Integer) cock.get("calorias"));
+                    map.setCalificacion((Integer) cock.get("calificacion"));
+                    map.setCreador((String) cock.get("creador"));
+                    lista_cockteles.add(map);
+                }
+                Void result=null;
+                new CargarCocktelesLista().onPostExecute(result);
+            } catch (ParseException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_precio) {
-            //Mostrar lista ordenada por precio
+            try{
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
+                query.orderByDescending("precio");
+                lista_objetos = query.find();
+                lista_cockteles.clear();
+                for (ParseObject cock : lista_objetos) {
+                    Cocktel map = new Cocktel();
+                    map.setNombre((String) cock.get("nombre"));
+                    map.setPersonas((String) cock.get("personas"));
+                    map.setPrecio((Integer) cock.get("precio"));
+                    map.setCalorias((Integer) cock.get("calorias"));
+                    map.setCalificacion((Integer) cock.get("calificacion"));
+                    map.setCreador((String) cock.get("creador"));
+                    lista_cockteles.add(map);
+                }
+                Void result=null;
+                new CargarCocktelesLista().onPostExecute(result);
+            } catch (ParseException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
 
         }
 
@@ -163,7 +207,6 @@ public class InicioActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            /* Creamos el array de cockteles */
             lista_cockteles = new ArrayList<Cocktel>();
             try {
                 /* Elegimos la tabla en la que queremos hacer la consulta */

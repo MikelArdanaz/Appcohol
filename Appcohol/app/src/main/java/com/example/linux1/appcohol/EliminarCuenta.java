@@ -29,7 +29,7 @@ public class EliminarCuenta extends DialogFragment {
                             @Override
                             public void done(com.parse.ParseException e) {
                                 if (e == null) {
-                                    Intent intent = new Intent( getActivity(), MainActivity.class );
+                                    Intent intent = new Intent(getContext(),MainActivity.class);
                                     startActivity( intent );
                                 } else {
                                     Toast.makeText(getActivity(), "No se ha podido eliminar la cuenta", Toast.LENGTH_SHORT).show();
