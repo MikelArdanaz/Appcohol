@@ -140,7 +140,7 @@ public class NuevoCocktelActivity extends AppCompatActivity {
 
                         /* Vamos a recorrer los componentes introduciendolos en la bd a la vez que calculamos las
                         * calorias y el precio totales como suma de el total */
-                            int precioTotal = 0;
+                            double precioTotal = 0;
                             int caloriasTotal = 0;
                             for (Componente componente : lista_componentes) {
                                 ParseObject add_componente = new ParseObject("componente_cocktel");

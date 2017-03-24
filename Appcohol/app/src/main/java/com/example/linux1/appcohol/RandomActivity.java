@@ -42,7 +42,7 @@ public class RandomActivity extends AppCompatActivity {
                     int indice = random.nextInt(lista_objetos.size());
                     Intent intent = new Intent( RandomActivity.this, MostrarCocktelActivity.class );
                     intent.putExtra("Cocktel", (String) lista_objetos.get(indice).get("nombre") );
-                    intent.putExtra("Precio", Integer.toString((Integer) lista_objetos.get(indice).get("precio")));
+                    intent.putExtra("Precio", Double.toString((Double) lista_objetos.get(indice).get("precio")));
                     intent.putExtra("Personas", (String) lista_objetos.get(indice).get("personas"));
                     intent.putExtra("Calorias", Integer.toString((Integer) lista_objetos.get(indice).get("calorias")));
                     intent.putExtra("Calificacion", Integer.toString((Integer) lista_objetos.get(indice).get("calificacion")));

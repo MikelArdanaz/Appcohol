@@ -7,11 +7,11 @@ package com.example.linux1.appcohol;
 public class ComponenteDatos {
 
     String nombre;
-    int precio;
+    double precio;
     int calorias;
     String supermercado;
 
-    public ComponenteDatos(String nombre, int precio, int calorias, String supermercado) {
+    public ComponenteDatos(String nombre, double precio, int calorias, String supermercado) {
         this.nombre = nombre;
         this.precio = precio;
         this.calorias = calorias;
@@ -22,7 +22,7 @@ public class ComponenteDatos {
         return nombre;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 

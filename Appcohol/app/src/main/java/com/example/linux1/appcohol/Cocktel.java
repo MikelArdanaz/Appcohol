@@ -9,7 +9,7 @@ public class Cocktel {
     private String nombre;
     private String creador;
     private String personas;
-    private int precio;
+    private double precio;
     private int calorias;
     private int calificacion;
 
@@ -25,7 +25,7 @@ public class Cocktel {
         this.personas = personas;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -49,7 +49,7 @@ public class Cocktel {
         return personas;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 

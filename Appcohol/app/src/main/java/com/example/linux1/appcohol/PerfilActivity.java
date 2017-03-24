@@ -90,7 +90,7 @@ public class PerfilActivity extends AppCompatActivity {
                     Cocktel map = new Cocktel();
                     map.setNombre((String) country.get("nombre"));
                     map.setPersonas((String) country.get("personas"));
-                    map.setPrecio((Integer) country.get("precio"));
+                    map.setPrecio((Double) country.get("precio"));
                     map.setCalorias((Integer) country.get("calorias"));
                     map.setCalificacion((Integer) country.get("calificacion"));
                     map.setCreador((String) country.get("creador"));
@@ -148,7 +148,7 @@ public class PerfilActivity extends AppCompatActivity {
                         Cocktel map = new Cocktel();
                         map.setNombre((String) objeto.get("nombre"));
                         map.setPersonas((String) objeto.get("personas"));
-                        map.setPrecio((Integer) objeto.get("precio"));
+                        map.setPrecio((Double) objeto.get("precio"));
                         map.setCalorias((Integer) objeto.get("calorias"));
                         map.setCalificacion((Integer) objeto.get("calificacion"));
                         map.setCreador((String) objeto.get("creador"));

@@ -79,7 +79,7 @@ public class AdaptadorListaCockteles extends BaseAdapter {
         /* Rellenamos esos elementos con los datos del cocktel */
         holder.nombre.setText(lista_cockteles.get(position).getNombre());
         holder.personas.setText(lista_cockteles.get(position).getPersonas());
-        holder.precio.setText(Integer.toString(lista_cockteles.get(position).getPrecio()));
+        holder.precio.setText(Double.toString(lista_cockteles.get(position).getPrecio()));
         holder.calorias.setText(Integer.toString(lista_cockteles.get(position).getCalorias()));
         holder.calificacion.setText(Integer.toString(lista_cockteles.get(position).getCalificacion()));
 
@@ -91,7 +91,7 @@ public class AdaptadorListaCockteles extends BaseAdapter {
 
                 Intent intent = new Intent( context, MostrarCocktelActivity.class );
                 intent.putExtra("Cocktel", lista_cockteles.get(position).getNombre() );
-                intent.putExtra("Precio", Integer.toString(lista_cockteles.get(position).getPrecio()));
+                intent.putExtra("Precio", Double.toString(lista_cockteles.get(position).getPrecio()));
                 intent.putExtra("Personas", lista_cockteles.get(0).getPersonas());
                 intent.putExtra("Calorias", Integer.toString(lista_cockteles.get(position).getCalorias()));
                 intent.putExtra("Calificacion", Integer.toString(lista_cockteles.get(position).getCalificacion()));

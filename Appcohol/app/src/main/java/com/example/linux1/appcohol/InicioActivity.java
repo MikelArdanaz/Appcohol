@@ -158,7 +158,7 @@ public class InicioActivity extends AppCompatActivity
                 Cocktel map = new Cocktel();
                 map.setNombre((String) cock.get("nombre"));
                 map.setPersonas((String) cock.get("personas"));
-                map.setPrecio((Integer) cock.get("precio"));
+                map.setPrecio((Double) cock.get("precio"));
                 map.setCalorias((Integer) cock.get("calorias"));
                 map.setCalificacion((Integer) cock.get("calificacion"));
                 map.setCreador((String) cock.get("creador"));
@@ -195,7 +195,7 @@ public class InicioActivity extends AppCompatActivity
                     Cocktel map = new Cocktel();
                     map.setNombre((String) objeto.get("nombre"));
                     map.setPersonas((String) objeto.get("personas"));
-                    map.setPrecio((Integer) objeto.get("precio"));
+                    map.setPrecio((Double) objeto.get("precio"));
                     map.setCalorias((Integer) objeto.get("calorias"));
                     map.setCalificacion((Integer) objeto.get("calificacion"));
                     map.setCreador((String) objeto.get("creador"));

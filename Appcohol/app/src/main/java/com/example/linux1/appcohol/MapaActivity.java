@@ -29,6 +29,13 @@ public class MapaActivity extends AppCompatActivity {
         mapView = (MapView)findViewById(R.id.mv_mapa_mapa);
         bt_volver = (Button) findViewById(R.id.bt_mapa_volver);
 
+        bt_volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
