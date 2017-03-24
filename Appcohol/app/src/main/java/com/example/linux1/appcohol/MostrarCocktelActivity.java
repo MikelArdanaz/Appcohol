@@ -93,7 +93,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
         try {
             lista_objetos = query.find();
 
-            autor = lista_objetos.get(0).get("creador_nombre").toString();
+            //autor = lista_objetos.get(0).get("creador_nombre").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             fecha = (formatter.format(lista_objetos.get(0).getCreatedAt()));
 

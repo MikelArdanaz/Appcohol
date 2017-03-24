@@ -1,5 +1,6 @@
 package com.example.linux1.appcohol;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
+import java.util.Random;
 
 public class RandomActivity extends AppCompatActivity {
 
@@ -36,7 +38,16 @@ public class RandomActivity extends AppCompatActivity {
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("cockteles");
                 try {
                     lista_objetos = query.find();
-                    int indice = ((int) Math.random() * lista_objetos.size()-1); //Los
+                    Random random = new Random();
+                    int indice = random.nextInt(lista_objetos.size());
+                    Intent intent = new Intent( RandomActivity.this, MostrarCocktelActivity.class );
+                    intent.putExtra("Cocktel", (String) lista_objetos.get(indice).get("nombre") );
+                    intent.putExtra("Precio", Integer.toString((Integer) lista_objetos.get(indice).get("precio")));
+                    intent.putExtra("Personas", (String) lista_objetos.get(indice).get("personas"));
+                    intent.putExtra("Calorias", Integer.toString((Integer) lista_objetos.get(indice).get("calorias")));
+                    intent.putExtra("Calificacion", Integer.toString((Integer) lista_objetos.get(indice).get("calificacion")));
+                    startActivity(intent);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
