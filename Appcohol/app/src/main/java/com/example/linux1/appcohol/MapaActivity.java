@@ -21,6 +21,8 @@ import com.mapbox.services.android.telemetry.location.LocationEngineListener;
 import com.mapbox.services.android.telemetry.permissions.PermissionsListener;
 import com.mapbox.services.android.telemetry.permissions.PermissionsManager;
 
+import java.util.List;
+
 
 public class MapaActivity extends AppCompatActivity implements PermissionsListener {
 
