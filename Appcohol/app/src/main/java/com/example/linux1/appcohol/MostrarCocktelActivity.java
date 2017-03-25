@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.linux1.appcohol.Constantes.COMPONENTES_DATOS;
+
 public class MostrarCocktelActivity extends AppCompatActivity {
 
     /* Elementos del layout */
@@ -45,6 +47,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
     private List<ParseObject> lista_objetos;
     private AdaptadorListaComponentesMostrar adaptador;
     private List<Componente> lista_componentes = null;
+    private ArrayList<String> supermercados_necesarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,8 @@ public class MostrarCocktelActivity extends AppCompatActivity {
         personas = getIntent().getStringExtra("Personas");
 
         lista_componentes = new ArrayList<Componente>();
+        supermercados_necesarios = new ArrayList<>();
+
         /* Obtenemos la lista haciendo una query */
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("componente_cocktel");
         query.whereEqualTo("cocktel", cocktel);
@@ -81,6 +86,16 @@ public class MostrarCocktelActivity extends AppCompatActivity {
                 Componente componente = new Componente();
                 componente.setNombre( (String) objeto.get("componente") );
                 componente.setCantidad( (Integer) objeto.get("cantidad"));
+
+                for( ComponenteDatos componenteDatos : COMPONENTES_DATOS ) {
+
+                    if( componenteDatos.getNombre().equalsIgnoreCase(componente.getNombre()) ){
+                        if( ! supermercados_necesarios.contains( componenteDatos.getSupermercado() )){
+                            supermercados_necesarios.add(componenteDatos.getSupermercado());
+                        }
+                    }
+                }
+
                 lista_componentes.add(componente);
             }
         } catch (ParseException e) {
@@ -148,6 +163,49 @@ public class MostrarCocktelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( MostrarCocktelActivity.this, MapaActivity.class );
+
+                if( supermercados_necesarios.contains("Dia") ){
+                    intent.putExtra("Dia",1);
+                } else {
+                    intent.putExtra("Dia",0);
+                }
+
+                if( supermercados_necesarios.contains("Eroski") ){
+                    intent.putExtra("Eroski",1);
+                } else {
+                    intent.putExtra("Eroski",0);
+                }
+
+                if( supermercados_necesarios.contains("Mercadona") ){
+                    intent.putExtra("Mercadona",1);
+                } else {
+                    intent.putExtra("Mercadona",0);
+                }
+
+                if( supermercados_necesarios.contains("El Corte Inglés") ){
+                    intent.putExtra("El Corte Inglés",1);
+                } else {
+                    intent.putExtra("El Corte Inglés",0);
+                }
+
+                if( supermercados_necesarios.contains("Carrefour") ){
+                    intent.putExtra("Carrefour",1);
+                } else {
+                    intent.putExtra("Carrefour",0);
+                }
+
+                if( supermercados_necesarios.contains("Hipercor") ){
+                    intent.putExtra("Hipercor",1);
+                } else {
+                    intent.putExtra("Hipercor",0);
+                }
+
+                if( supermercados_necesarios.contains("Caprabo") ){
+                    intent.putExtra("Caprabo",1);
+                } else {
+                    intent.putExtra("Caprabo",0);
+                }
+
                 startActivity( intent );
             }
         });

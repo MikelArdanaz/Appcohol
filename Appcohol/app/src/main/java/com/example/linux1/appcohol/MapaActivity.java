@@ -34,6 +34,14 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
     private LocationEngineListener locationEngineListener;
     private PermissionsManager permissionsManager;
 
+    private int Dia;
+    private int Eroski;
+    private int Mercadona;
+    private int ElCorteIngles;
+    private int Carrefour;
+    private int Hipercor;
+    private int Caprabo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +79,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
                 finish();
             }
         });
+
+        Dia = getIntent().getIntExtra("Dia",Dia);
+        Eroski = getIntent().getIntExtra("Eroski",Eroski);
+        Mercadona = getIntent().getIntExtra("Mercadona", Mercadona);
+        ElCorteIngles = getIntent().getIntExtra("ElCorteIngles",ElCorteIngles);
+        Carrefour = getIntent().getIntExtra("Carrefour",Carrefour);
+        Hipercor = getIntent().getIntExtra("Hipercor",Hipercor);
+        Caprabo = getIntent().getIntExtra("Caprabo",Caprabo);
+
+        // DEBUG para comprobar que supermercados estan elegidos
+        System.out.println( Dia + "|" + Eroski + "|" + Mercadona + "|" + ElCorteIngles + "|" + Carrefour + "|" +
+        Hipercor + "|" + Caprabo);
     }
 
     @Override
