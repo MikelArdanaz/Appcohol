@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/fondoAmarillo"
     android:orientation="vertical">
 
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mv_mapa_mapa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"/>
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/Bt_Location"
+        android:id="@+id/bt_mapa_localizacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:clickable="true"
-        mapbox:fabSize="mini"
-        mapbox:srcCompat="@drawable/ic_my_location_24dp"
-        tools:ignore="VectorDrawableCompat"/>
+        app:srcCompat="@drawable/ic_my_location_24dp"
+        tools:ignore="VectorDrawableCompat"
+        app:backgroundTint="@color/colorAccent"/>
 
     <Button
         android:id="@+id/bt_mapa_volver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/mapView"
-        android:layout_alignLeft="@+id/mapView"
+        android:layout_gravity="start|bottom"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/boton_rojo"
         android:paddingLeft="15dp"
@@ -32,15 +39,4 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        mapbox:center_latitude="42.8017"
-        mapbox:center_longitude="-1.6262"
-        mapbox:style_url="mapbox://styles/mikelardanaz/ciz8agm0l006w2rlrtmhy2ns3"
-        mapbox:tilt="20"
-        mapbox:zoom="12"
-        />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
