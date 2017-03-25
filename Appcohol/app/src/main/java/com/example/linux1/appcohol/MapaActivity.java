@@ -20,7 +20,6 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
-
 public class MapaActivity extends AppCompatActivity {
 
     /* Elementos del layout */
