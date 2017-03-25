@@ -1,32 +1,41 @@
 package com.example.linux1.appcohol;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.mapbox.mapboxsdk.MapboxAccountManager;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapzen.android.lost.api.LocationServices;
 
 public class MapaActivity extends AppCompatActivity {
 
     /* Elementos del layout */
-    private MapView mapView = null;
+    private MapView mapa = null;
     private Button bt_volver;
 
     /* Variables */
-    private MapboxMap mapboxMap = null;
+    private MapboxMap map = null;
+    private LocationServices locationServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MapboxAccountManager.start(this, getString(R.string.access_token));
+        Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_mapa);
 
         /* Relacionar elementos del layout */
-        mapView = (MapView)findViewById(R.id.mv_mapa_mapa);
+        mapa = (MapView)findViewById(R.id.mv_mapa_mapa);
         bt_volver = (Button) findViewById(R.id.bt_mapa_volver);
 
         bt_volver.setOnClickListener(new View.OnClickListener() {
@@ -36,42 +45,63 @@ public class MapaActivity extends AppCompatActivity {
             }
         });
 
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
+        mapa.onCreate(savedInstanceState);
+        mapa.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(MapboxMap map) {
-                mapboxMap = map;
+            public void onMapReady(MapboxMap mapboxMap) {
+
+                map = mapboxMap;
+                /* Mostrar supermercados */
+                    /* Centrar la vista en la posicion actual del usuario */
+                        /* Obtener la localizacion actual del usuario */
+                    /* Saber que supermercados va a visitar y cuales son los mas cercanos de cada tipo */
+                    /* Mostrar los supermercados como marcadores */
+                    /* Trazar la ruta mas rapida que pase por todos ellos */
             }
         });
+
     }
 
     @Override
-    protected void onDestroy() {
-        mapView.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        mapView.onResume();
+        mapa.onResume();
     }
 
     @Override
-    protected void onPause() {
+    protected void onStart() {
+        super.onStart();
+        mapa.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapa.onStop();
+    }
+
+    @Override
+    public void onPause() {
         super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+        mapa.onPause();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        mapa.onLowMemory();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapa.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapa.onSaveInstanceState(outState);
+    }
+
 }

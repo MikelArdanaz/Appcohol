@@ -28,7 +28,7 @@
         <activity android:name=".MostrarCocktelActivity" />
         <activity android:name=".PopupEliminarCuenta" android:theme="@style/Transparent.AppTheme" />
         <activity android:name=".MapaActivity" />
-        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     </application>
 
 </manifest>

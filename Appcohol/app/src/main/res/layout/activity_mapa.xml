@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="15dp"
     android:background="@color/fondoAmarillo"
     android:orientation="vertical">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/bt_mapa_volver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mv_mapa_mapa"
+        android:layout_alignLeft="@+id/mv_mapa_mapa"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/boton_rojo"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Volver"
+        android:textColor="@color/blanco"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mv_mapa_mapa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/layout_blanco_redondeado"
-        android:orientation="vertical">
+        mapbox:mapbox_cameraTargetLat="40.73581"
+        mapbox:mapbox_cameraTargetLng="-73.99155"
+        mapbox:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"
+        mapbox:mapbox_cameraZoom="11"/>
 
-        <com.mapbox.mapboxsdk.maps.MapView
-            android:id="@+id/mv_mapa_mapa"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            mapbox:center_latitude="42.8017"
-            mapbox:center_longitude="-1.6262"
-            mapbox:style_url="streets-v9"
-            mapbox:tilt="20"
-            mapbox:zoom="12" />
-
-        <Button
-            android:id="@+id/bt_mapa_volver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/boton_rojo"
-            android:text="Volver"
-            android:textColor="@color/blanco"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 </RelativeLayout>
