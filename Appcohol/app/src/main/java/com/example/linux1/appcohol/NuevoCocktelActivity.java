@@ -164,7 +164,7 @@ public class NuevoCocktelActivity extends AppCompatActivity {
                             }
 
                             nuevo_cocktel.put("calificacion",2);
-                            nuevo_cocktel.put("precio",precioTotal);
+                            nuevo_cocktel.put("precio",(double)Math.round(precioTotal * 100d) / 100d);
                             nuevo_cocktel.put("calorias",caloriasTotal);
                             nuevo_cocktel.saveInBackground(new SaveCallback() {
                                 @Override
@@ -184,7 +184,6 @@ public class NuevoCocktelActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
 
 
 
