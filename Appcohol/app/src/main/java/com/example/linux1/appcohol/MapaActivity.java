@@ -23,6 +23,7 @@ import com.mapbox.services.android.telemetry.permissions.PermissionsManager;
 
 import java.util.List;
 
+
 public class MapaActivity extends AppCompatActivity implements PermissionsListener {
 
     private MapView mapView;
