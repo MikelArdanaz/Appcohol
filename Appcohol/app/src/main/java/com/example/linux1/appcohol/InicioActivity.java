@@ -1,6 +1,9 @@
 package com.example.linux1.appcohol;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -45,6 +48,14 @@ public class InicioActivity extends AppCompatActivity
     private AdaptadorListaCockteles adaptador;
     private List<Cocktel> lista_cockteles = null;
 
+    /* Escuchadores */
+    private final BroadcastReceiver refrescar_lista= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            new CargarCocktelesListaNuevos().execute();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +87,11 @@ public class InicioActivity extends AppCompatActivity
         });
 
         /* Mostrar el nombre de usuario */
-
         user = ParseUser.getCurrentUser();
         tv_menu_usuario.setText(user.getUsername());
+
+        /* Inicializar el escuchador */
+        registerReceiver(refrescar_lista, new IntentFilter("refrescar_lista"));
     }
 
     /* Abrir/Cerrar menu lateral al pulsar retroceder */

@@ -44,5 +44,9 @@ dependencies {
     // Mapbox Android UI
     compile 'com.mapbox.mapboxsdk:mapbox-android-ui:2.0.0'
 
+    //Mapbox Directions
+    compile ('com.mapbox.mapboxsdk:mapbox-android-directions:1.0.0@aar'){
+        transitive=true
+    }
 
 }
