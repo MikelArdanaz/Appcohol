@@ -11,7 +11,7 @@ public class Constantes {
 
     public static final String[] COMPONENTES_NOMBRES = {
 
-            "Coca-Cola", "KAS Limón","Vodka","Ron","Baileys","Ginebra","Whisky","Limoncello","Licor de hierbas","Orujo","Anís","Mojito","Brandy","Licor De Manzana","Tequila","Pacharán","Batido de Chocolate","Batido de Fresa","Batido de Vainilla","Sidra","Cava","Cerveza (Rubia)","Cerveza (Negra)","Cerveza con Tequila","Moscatel","Jerez","Gaseosa","Red Bull","Rockstar","Burn","Aquarius Limón","Aquarius Naranja","Bitter Kas","Pepsi","Sprite","Kas Naranja","Sunny","Nestea","Tónica","Sangria","Vermouth","Vino","Mosto"
+            "Coca-Cola", "KAS Limón","Vodka","Ron","Baileys","Ginebra","Whisky","Limoncello","Licor de hierbas","Orujo","Anís","Mojito","Brandy","Licor De Manzana","Tequila","Pacharán","Batido de Chocolate","Batido de Fresa","Batido de Vainilla","Sidra","Cava","Cerveza (Rubia)","Cerveza (Negra)","Cerveza con Tequila","Moscatel","Jerez","Gaseosa","Red Bull","Rockstar","Burn","Aquarius Limón","Aquarius Naranja","Bitter Kas","Pepsi","Sprite","Kas Naranja","Sunny","Nestea","Tónica","Sangria","Vermouth","Vino","Mosto","Zumo De Manzana","Zumo de Melocotón","Zumo de Naranja","Zumo De Tomate","Zumo De Piña"
 
     };
 
@@ -62,6 +62,11 @@ public class Constantes {
             add( new ComponenteDatos("Vermouth",2.05,130,"Dia"));
             add( new ComponenteDatos("Vino",1.18,83,"Mercadona"));
             add( new ComponenteDatos("Mosto",1.6,61,"El Corte Inglés"));
+            add( new ComponenteDatos("Zumo De Manzana",0.55,46,"Dia"));
+            add( new ComponenteDatos("Zumo de Melocotón",2.23,54,"Dia"));
+            add( new ComponenteDatos("Zumo de Naranja",0.55,46,"Dia"));
+            add( new ComponenteDatos("Zumo De Tomate",0.57,17,"Dia"));
+            add( new ComponenteDatos("Zumo De Piña",0.74,53,"Dia"));
                  }
 
     };

@@ -14,8 +14,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +161,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( MostrarCocktelActivity.this, MapaActivity.class );
-
+                intent.putExtra("cocktel",cocktel);
                 if( supermercados_necesarios.contains("Dia") ){
                     intent.putExtra("Dia",1);
                 } else {

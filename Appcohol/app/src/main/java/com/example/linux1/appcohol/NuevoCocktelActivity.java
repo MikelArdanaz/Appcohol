@@ -1,6 +1,5 @@
 package com.example.linux1.appcohol;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -21,10 +19,11 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static com.example.linux1.appcohol.Constantes.COMPONENTES_NOMBRES;
 import static com.example.linux1.appcohol.Constantes.COMPONENTES_DATOS;
+import static com.example.linux1.appcohol.Constantes.COMPONENTES_NOMBRES;
 
 public class NuevoCocktelActivity extends AppCompatActivity {
 
@@ -99,7 +98,7 @@ public class NuevoCocktelActivity extends AppCompatActivity {
                 String nombre = actv_componente.getText().toString();
                 int cantidad = Integer.parseInt(sp_cantidad.getSelectedItem().toString());
 
-                if ( !nombre.equalsIgnoreCase("")){
+                if ( !nombre.equalsIgnoreCase("") && Arrays.asList(COMPONENTES_NOMBRES).contains(nombre)){
                     Componente nuevo_componente = new Componente();
                     nuevo_componente.setNombre(nombre);
                     nuevo_componente.setCantidad(cantidad);
@@ -107,7 +106,15 @@ public class NuevoCocktelActivity extends AppCompatActivity {
                     refrescarLista();
                     actv_componente.setText("");
                 }else{
-                    Toast.makeText(NuevoCocktelActivity.this,"Debes introducir un componente", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(NuevoCocktelActivity.this,"Debes introducir un componente válido", Toast.LENGTH_SHORT ).show();
+                    ParseObject add_nuevos = new ParseObject("Nuevos");
+                    add_nuevos.put("nombre",nombre);
+                    add_nuevos.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                        }
+                    });
                 }
             }
         });

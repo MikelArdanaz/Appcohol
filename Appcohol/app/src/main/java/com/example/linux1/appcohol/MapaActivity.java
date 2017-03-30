@@ -9,12 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mapbox.directions.service.models.Waypoint;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
@@ -34,17 +32,22 @@ import com.mapbox.services.api.directions.v5.DirectionsCriteria;
 import com.mapbox.services.api.directions.v5.MapboxDirections;
 import com.mapbox.services.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.services.api.directions.v5.models.DirectionsRoute;
-import com.mapbox.services.api.directions.v5.models.DirectionsWaypoint;
 import com.mapbox.services.commons.geojson.LineString;
 import com.mapbox.services.commons.models.Position;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.linux1.appcohol.Constantes.COMPONENTES_DATOS;
 import static com.example.linux1.appcohol.Constantes.COMPONENTES_SUPERMERCADOS;
 import static java.lang.Math.abs;
 
@@ -68,6 +71,8 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
     private int Carrefour;
     private int Hipercor;
     private int Caprabo;
+    private String cocktel;
+    private List<ParseObject> lista_objetos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +119,7 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
         Carrefour = getIntent().getIntExtra("Carrefour", Carrefour);
         Hipercor = getIntent().getIntExtra("Hipercor", Hipercor);
         Caprabo = getIntent().getIntExtra("Caprabo", Caprabo);
-
+        cocktel = getIntent().getStringExtra("cocktel");
         // DEBUG para comprobar que supermercados estan elegidos
         System.out.println(Dia + "|" + Eroski + "|" + Mercadona + "|" + ElCorteIngles + "|" + Carrefour + "|" +
                 Hipercor + "|" + Caprabo);
@@ -183,6 +188,16 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
     private void enableLocation(boolean enabled) {
         if (enabled) {
 
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             Location lastLocation = locationEngine.getLastLocation(); //Esto es un waring, no afecta
 
             if (lastLocation != null) {
@@ -243,7 +258,23 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
         double latitud = localizacion.getLatitude();
         double longitud = localizacion.getLongitude();
         List<Position> lista_puntos = new ArrayList<>();
-
+        Hashtable<String,String> lista_compra=new Hashtable<String, String>();
+        //Obtenemos la lista de componentes de ese cocktel desde parse
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("componente_cocktel");
+        query.whereEqualTo("cocktel", cocktel);
+        try {
+            lista_objetos = query.find();
+            for (ParseObject objeto : lista_objetos) {
+                for( ComponenteDatos componenteDatos : COMPONENTES_DATOS ) {
+                    if( componenteDatos.getNombre().equalsIgnoreCase((String) objeto.get("componente")) ){
+                        lista_compra.put(componenteDatos.getNombre(),componenteDatos.getSupermercado());
+                    }
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Marcamos los supermercados que tenemos que visitar
         lista_puntos.add(Position.fromCoordinates( localizacion.getLongitude(), localizacion.getLatitude()));
         if( Dia == 1 ) {
 
@@ -267,10 +298,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
-
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Dia")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                    System.out.println(componentes_marker);
+                }
+            }
+            System.out.println(componentes_marker);
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Dia"));
+                    .title("Dia")
+                    .snippet(componentes_marker));
 
         }
 
@@ -295,10 +334,17 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
             }
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
-
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Eroski")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Eroski"));
+                    .title("Eroski")
+                    .snippet(componentes_marker)
+            );
 
         }
 
@@ -324,9 +370,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
 
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Mercadona")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Mercadona"));
+                    .title("Mercadona")
+                    .snippet(componentes_marker)
+            );
 
         }
 
@@ -352,9 +407,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
 
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("El Corte Inglés")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("El Corte Inglés"));
+                    .title("El Corte Inglés")
+                    .snippet(componentes_marker)
+            );
 
         }
 
@@ -380,9 +444,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
 
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Carrefour")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Carrefour"));
+                    .title("Carrefour")
+                    .snippet(componentes_marker)
+            );
 
         }
 
@@ -408,9 +481,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
 
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Hipercor")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Hipercor"));
+                    .title("Hipercor")
+                    .snippet(componentes_marker)
+            );
 
         }
 
@@ -436,9 +518,18 @@ public class MapaActivity extends AppCompatActivity implements PermissionsListen
 
             lista_puntos.add( Position.fromCoordinates( longitud_mas_cercano, latitud_mas_cerano ) );
 
+            String componentes_marker="";
+            for (Map.Entry<String,String> entry:lista_compra.entrySet()){
+                if (entry.getValue().equalsIgnoreCase("Caprabo")){
+                    componentes_marker=componentes_marker+entry.getKey()+"\n";
+                }
+            }
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(latitud_mas_cerano, longitud_mas_cercano))
-                    .title("Caprabo"));
+                    .title("Caprabo")
+                    .snippet(componentes_marker)
+            );
 
         }
 
