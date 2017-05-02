@@ -95,6 +95,7 @@ public class AdaptadorListaCockteles extends BaseAdapter {
                 intent.putExtra("Personas", lista_cockteles.get(0).getPersonas());
                 intent.putExtra("Calorias", Integer.toString(lista_cockteles.get(position).getCalorias()));
                 intent.putExtra("Calificacion", Integer.toString(lista_cockteles.get(position).getCalificacion()));
+                intent.putExtra("Creador", lista_cockteles.get(position).getCreador());
                 context.startActivity(intent);
             }
         });

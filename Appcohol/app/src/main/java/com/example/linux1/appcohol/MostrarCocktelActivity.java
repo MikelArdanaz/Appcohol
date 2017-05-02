@@ -43,6 +43,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
     private String calificacion;
     private String autor;
     private String fecha;
+    private String creador;
     private List<ParseObject> lista_objetos;
     private AdaptadorListaComponentesMostrar adaptador;
     private List<Componente> lista_componentes = null;
@@ -72,6 +73,15 @@ public class MostrarCocktelActivity extends AppCompatActivity {
         calorias = getIntent().getStringExtra("Calorias");
         calificacion = getIntent().getStringExtra("Calificacion");
         personas = getIntent().getStringExtra("Personas");
+        creador = getIntent().getStringExtra("Creador");
+
+        if (ParseUser.getCurrentUser().getObjectId().equals(creador)){
+            bt_borrar.setVisibility(View.VISIBLE);
+        }else {
+            bt_borrar.setVisibility(View.GONE);
+            String a = ParseUser.getCurrentUser().getObjectId();
+            System.out.print(a);
+        }
 
         lista_componentes = new ArrayList<Componente>();
         supermercados_necesarios = new ArrayList<>();
