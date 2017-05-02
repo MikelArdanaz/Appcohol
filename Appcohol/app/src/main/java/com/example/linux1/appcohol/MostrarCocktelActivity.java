@@ -79,8 +79,6 @@ public class MostrarCocktelActivity extends AppCompatActivity {
             bt_borrar.setVisibility(View.VISIBLE);
         }else {
             bt_borrar.setVisibility(View.GONE);
-            String a = ParseUser.getCurrentUser().getObjectId();
-            System.out.print(a);
         }
 
         lista_componentes = new ArrayList<Componente>();
