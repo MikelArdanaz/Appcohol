@@ -13,9 +13,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_menu"
-        app:backgroundTint="@color/fondoAmarillo" />
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/fondoAmarillo"
+        app:srcCompat="@drawable/ic_menu" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -49,4 +49,9 @@ dependencies {
         transitive=true
     }
 
+    //Lottie Animacion
+    dependencies {
+        compile 'com.airbnb.android:lottie:2.0.0-beta3'
+    }
+
 }

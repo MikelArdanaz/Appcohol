@@ -1,19 +1,16 @@
 package com.example.linux1.appcohol;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.linux1.appcohol.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_pass;
     private Button bt_login;
     private Button bt_registrar;
+    private Button bt_olvido;
 
     /* Variables */
     private String usuario;
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         /* Iniciar sesion */
         bt_login.setOnClickListener(new View.OnClickListener() {

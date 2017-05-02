@@ -35,6 +35,10 @@
                 android:id="@+id/nav_calorias"
                 android:icon="@drawable/ic_menu_calorias"
                 android:title="Calorias" />
+            <item
+                android:id="@+id/nav_novedades"
+                android:icon="@drawable/ic_menu_novedades"
+                android:title="Novedades" />
         </menu>
     </item>
 
