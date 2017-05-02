@@ -33,6 +33,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
     private TextView tv_calificacion;
     private Button bt_mapa;
     private Button bt_favoritos;
+    private Button bt_borrar;
 
     /* Variables */
     private String cocktel;
@@ -63,6 +64,7 @@ public class MostrarCocktelActivity extends AppCompatActivity {
         tv_calificacion = (TextView) findViewById(R.id.tv_mostrarcocktel_calificacion);
         bt_mapa = (Button) findViewById(R.id.bt_mostrarcocktel_mapa);
         bt_favoritos = (Button) findViewById(R.id.bt_mostrarcocktel_favoritos);
+        bt_borrar = (Button) findViewById(R.id.bt_mostrarcocktel_borrar);
 
         /* Obtener la informacion del cocktel a mostrar */
         cocktel = getIntent().getStringExtra("Cocktel");
@@ -153,6 +155,21 @@ public class MostrarCocktelActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        /* Borrar Cocktel */
+        bt_borrar.setOnClickListener(new  View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                try {
+                    ParseObject.deleteAll(lista_objetos);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Intent i = new Intent("refrescar_lista");
+                sendBroadcast(i);
+                finish();
             }
         });
 

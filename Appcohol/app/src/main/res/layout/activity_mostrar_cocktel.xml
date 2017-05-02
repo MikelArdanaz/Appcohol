@@ -165,6 +165,17 @@
                 android:background="@drawable/boton_verde"
                 android:text="Favoritos"
                 android:textColor="@color/blanco"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/bt_mostrarcocktel_borrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="3"
+                android:background="@drawable/boton_rojo"
+                android:text="Borrar"
+                android:textColor="@color/blanco"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
